@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.11.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.5.11.jar"/>
 	<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="lib/datedFileAppender-1.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
