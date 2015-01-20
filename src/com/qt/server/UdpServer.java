@@ -8,6 +8,8 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import org.apache.log4j.Logger;
 
+import com.qt.constant.Constants;
+
 /**
  * A UDP server that responds to the QOTM (quote of the moment) request to a
  * {@link QuoteOfTheMomentClient}.
@@ -19,7 +21,6 @@ import org.apache.log4j.Logger;
 public final class UdpServer {
 
 	private static final Logger LOGGER = Logger.getLogger(UdpServer.class);
-	private static final int PORT = 80;
 
 	public static void main(String[] args) throws Exception {
 		LOGGER.info("==========[UDP Server Init]==========");
@@ -27,9 +28,9 @@ public final class UdpServer {
 		try {
 			Bootstrap b = new Bootstrap();
 			b.group(group).channel(NioDatagramChannel.class).option(ChannelOption.SO_BROADCAST, true).handler(new UdpServerHandler());
-			LOGGER.info("==========[UDP Server Bind Port : " + PORT + "]==========");
+			LOGGER.info("==========[UDP Server Bind Port : " + Constants.SERVER_PORT + "]==========");
 			LOGGER.info("==========[UDP Server Started]==========");
-			b.bind(PORT).sync().channel().closeFuture().await();
+			b.bind(Constants.SERVER_PORT).sync().channel().closeFuture().await();
 		} catch (Exception e) {
 			LOGGER.error("[UdpServer] -> [started failed]", e);
 		} finally {
