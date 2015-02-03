@@ -24,6 +24,8 @@ public class Bracelet {
 
 	private float temperature;
 
+	private String warning;
+
 	private String braceletId;
 
 	private byte[] endCode;
@@ -32,14 +34,14 @@ public class Bracelet {
 
 		Sql2o sql2o = new Sql2o(BraceletDataSource.getDataSoruce());
 
-		String sql = "INSERT INTO tb_health_data(bracelet_id, motion_state, pulse_state, temperature, create_date) "
-				+ "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :create_date)";
+		String sql = "INSERT INTO tb_health_data(bracelet_id, motion_state, pulse_state, temperature, warning, create_date) "
+				+ "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :warning, :create_date)";
 
 		try (Connection con = sql2o.open()) {
 			LOGGER.info("==========[Save bracelet start] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
 			con.createQuery(sql).addParameter("bracelet_id", bracelet.getBraceletId()).addParameter("motion_state", bracelet.getMotionState())
-					.addParameter("pulse_state", bracelet.getPulseState()).addParameter("temperature", bracelet.getTemperature()).addParameter("create_date", new Date())
-					.executeUpdate();
+					.addParameter("pulse_state", bracelet.getPulseState()).addParameter("temperature", bracelet.getTemperature()).addParameter("warning", bracelet.getWarning())
+					.addParameter("create_date", new Date()).executeUpdate();
 			LOGGER.info("==========[Save bracelet end] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
 		} catch (Exception e) {
 			LOGGER.error("==========[Save bracelet exception] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
@@ -109,6 +111,14 @@ public class Bracelet {
 
 	public void setBraceletId(String braceletId) {
 		this.braceletId = braceletId;
+	}
+
+	public String getWarning() {
+		return warning;
+	}
+
+	public void setWarning(String warning) {
+		this.warning = warning;
 	}
 
 }
