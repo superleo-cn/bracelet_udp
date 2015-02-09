@@ -20,11 +20,12 @@ public final class UdpClient {
 
 	static final int PORT = 8080;
 
-	//static final String IP = "218.212.108.250";
+	// static final String IP = "218.212.108.250";
+	// static final String IP = "54.169.209.8";
 	static final String IP = "localhost";
 
 	static final String HEX_VALUE = new String(new byte[] { (byte) 0x55, (byte) 0x33, (byte) 0x10, (byte) 0x01, (byte) 0x01, (byte) 0x3C, (byte) 0x33, (byte) 0x38, (byte) 0x2E,
-			(byte) 0x35, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x0D, (byte) 0x0A });
+			(byte) 0x35, (byte) 0x01, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x0D, (byte) 0x0A });
 
 	public static void main(String[] args) throws Exception {
 

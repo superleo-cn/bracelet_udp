@@ -41,8 +41,9 @@ public class DataParseStringUtil {
 			String motionState = parseMotionState(bytes[4]);
 			int pulseState = parsePulseState(bytes[5]);
 			float temperature = parseTemperature(Arrays.copyOfRange(bytes, 6, 10));
-			String braceletId = parseBraceletId(Arrays.copyOfRange(bytes, 10, 17));
-			byte[] endCode = Arrays.copyOfRange(bytes, 17, 19);
+			String warning = parseWarning(bytes[10]);
+			String braceletId = parseBraceletId(Arrays.copyOfRange(bytes, 11, 18));
+			byte[] endCode = Arrays.copyOfRange(bytes, 18, 20);
 
 			if (!doVerification(startCode, endCode)) {
 				LOGGER.error("[DataParseByteUtil] -> [parseData] -> [invalid format : " + Hex.encodeHexString(bytes) + "]");
@@ -55,6 +56,7 @@ public class DataParseStringUtil {
 			bracelet.setMotionState(motionState);
 			bracelet.setPulseState(pulseState);
 			bracelet.setTemperature(temperature);
+			bracelet.setWarning(warning);
 			bracelet.setBraceletId(braceletId);
 			bracelet.setEndCode(endCode);
 			return bracelet;
@@ -83,6 +85,10 @@ public class DataParseStringUtil {
 
 	private float parseTemperature(byte[] data) {
 		return Float.parseFloat(new String(data, CharsetUtil.US_ASCII));
+	}
+
+	private String parseWarning(byte data) {
+		return String.valueOf((int) data);
 	}
 
 	private String parseBraceletId(byte[] data) {
