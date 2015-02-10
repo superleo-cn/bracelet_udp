@@ -26,6 +26,10 @@ public class Bracelet {
 
 	private String warning;
 
+	private int sbp;
+
+	private int dbp;
+
 	private String braceletId;
 
 	private byte[] endCode;
@@ -34,17 +38,17 @@ public class Bracelet {
 
 		Sql2o sql2o = new Sql2o(BraceletDataSource.getDataSoruce());
 
-		String sql = "INSERT INTO tb_health_data(bracelet_id, motion_state, pulse_state, temperature, warning, create_date) "
-				+ "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :warning, :create_date)";
+		String sql = "INSERT INTO tb_health_data(bracelet_id, motion_state, pulse_state, temperature, warning, sbp, dbp, create_date) "
+				+ "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :warning, :sbp, :dbp, :create_date)";
 
 		try (Connection con = sql2o.open()) {
 			LOGGER.info("==========[Save bracelet start] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
 			con.createQuery(sql).addParameter("bracelet_id", bracelet.getBraceletId()).addParameter("motion_state", bracelet.getMotionState())
 					.addParameter("pulse_state", bracelet.getPulseState()).addParameter("temperature", bracelet.getTemperature()).addParameter("warning", bracelet.getWarning())
-					.addParameter("create_date", new Date()).executeUpdate();
+					.addParameter("sbp", bracelet.getSbp()).addParameter("dbp", bracelet.getDbp()).addParameter("create_date", new Date()).executeUpdate();
 			LOGGER.info("==========[Save bracelet end] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
 		} catch (Exception e) {
-			LOGGER.error("==========[Save bracelet exception] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
+			LOGGER.error("==========[Save bracelet exception] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========", e);
 		}
 
 	}
@@ -119,6 +123,22 @@ public class Bracelet {
 
 	public void setWarning(String warning) {
 		this.warning = warning;
+	}
+
+	public int getSbp() {
+		return sbp;
+	}
+
+	public void setSbp(int sbp) {
+		this.sbp = sbp;
+	}
+
+	public int getDbp() {
+		return dbp;
+	}
+
+	public void setDbp(int dbp) {
+		this.dbp = dbp;
 	}
 
 }
