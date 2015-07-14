@@ -82,7 +82,7 @@ public final class UdpClientService {
         int sbpState = getSbpState();
         int dbpState = getDbpState();
 
-        Byte[] userId = new Byte[]{(byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04, (byte) 0x05, (byte) 0x06, (byte) 0x07};
+        Byte[] userId = new Byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01};
         Byte[] end_code = new Byte[]{(byte) 0x0D, (byte) 0x0A};
 
         addToList(list, header);
