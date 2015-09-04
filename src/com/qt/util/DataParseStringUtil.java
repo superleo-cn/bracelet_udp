@@ -62,7 +62,7 @@ public class DataParseStringUtil {
         String braceletId = parseBraceletId(Arrays.copyOfRange(bytes, 14, 21));
         float latitude = parseTemperature(Arrays.copyOfRange(bytes, 21, 31));
         float longitude = parseTemperature(Arrays.copyOfRange(bytes, 31, 41));
-        byte[] endCode = Arrays.copyOfRange(bytes, 42, 44);
+        byte[] endCode = Arrays.copyOfRange(bytes, 41, 43);
 
         if (!doVerification(startCode, endCode)) {
             LOGGER.error("[DataParseByteUtil] -> [parseData] -> [invalid format : " + Hex.encodeHexString(bytes) + "]");
