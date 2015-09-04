@@ -13,107 +13,122 @@ import com.qt.domain.Bracelet;
 
 public class DataParseStringUtil {
 
-	private static final Logger LOGGER = Logger.getLogger(DataParseStringUtil.class);
+    private static final Logger LOGGER = Logger.getLogger(DataParseStringUtil.class);
 
-	private String rawData;
+    private String rawData;
 
-	private Bracelet bracelet = new Bracelet();
+    private Bracelet bracelet = new Bracelet();
 
-	public DataParseStringUtil() {
+    public DataParseStringUtil() {
 
-	}
+    }
 
-	public void setRawData(String rawData) {
-		this.rawData = rawData;
-	}
+    public void setRawData(String rawData) {
+        this.rawData = rawData;
+    }
 
-	public DataParseStringUtil(String data) {
-		this.rawData = data;
-	}
+    public DataParseStringUtil(String data) {
+        this.rawData = data;
+    }
 
-	public Bracelet parseData() {
-		try {
-			String value = this.rawData;
-			byte[] bytes = value.getBytes();
-			byte[] startCode = Arrays.copyOfRange(bytes, 0, 2);
-			String length = parseLength(bytes[2]);
-			byte command = bytes[3];
-			String motionState = parseMotionState(bytes[4]);
-			int pulseState = parsePulseState(bytes[5]);
-			float temperature = parseTemperature(Arrays.copyOfRange(bytes, 6, 10));
-			String warning = parseWarning(bytes[10]);
-			int sbp = parsePulseState(bytes[11]);
-			int dbp = parsePulseState(bytes[12]);
-			String braceletId = parseBraceletId(Arrays.copyOfRange(bytes, 13, 20));
-			byte[] endCode = Arrays.copyOfRange(bytes, 20, 22);
+    public Bracelet parseData() {
+        try {
+            String value = this.rawData;
+            byte[] bytes = value.getBytes();
+            String protocol = parseLength(bytes[3]);
+            if (StringUtils.equals(protocol, "1")) {
+                return createBracelet();
+            }
+            return null;
+        } catch (Exception e) {
+            LOGGER.error("[DataParseByteUtil] -> [parseData] -> [exception]", e);
+        }
+        return null;
+    }
 
-			if (!doVerification(startCode, endCode)) {
-				LOGGER.error("[DataParseByteUtil] -> [parseData] -> [invalid format : " + Hex.encodeHexString(bytes) + "]");
-				return null;
-			}
+    public Bracelet createBracelet() {
+        String value = this.rawData;
+        byte[] bytes = value.getBytes();
+        byte[] startCode = Arrays.copyOfRange(bytes, 0, 2);
+        String length = parseLength(bytes[2]);
+        String protocol = parseLength(bytes[3]);
+        byte command = bytes[4];
+        String motionState = parseMotionState(bytes[5]);
+        int pulseState = parsePulseState(bytes[6]);
+        float temperature = parseTemperature(Arrays.copyOfRange(bytes, 7, 11));
+        String warning = parseWarning(bytes[11]);
+        int sbp = parsePulseState(bytes[12]);
+        int dbp = parsePulseState(bytes[13]);
+        String braceletId = parseBraceletId(Arrays.copyOfRange(bytes, 14, 21));
+        float latitude = parseTemperature(Arrays.copyOfRange(bytes, 21, 31));
+        float longitude = parseTemperature(Arrays.copyOfRange(bytes, 31, 41));
+        byte[] endCode = Arrays.copyOfRange(bytes, 42, 44);
 
-			bracelet.setStartCode(startCode);
-			bracelet.setLength(length);
-			bracelet.setCommand(command);
-			bracelet.setMotionState(motionState);
-			bracelet.setPulseState(pulseState);
-			bracelet.setTemperature(temperature);
-			bracelet.setWarning(warning);
-			bracelet.setSbp(sbp);
-			bracelet.setDbp(dbp);
-			bracelet.setBraceletId(braceletId);
-			bracelet.setEndCode(endCode);
-			return bracelet;
-		} catch (Exception e) {
-			LOGGER.error("[DataParseByteUtil] -> [parseData] -> [exception]", e);
-		}
-		return null;
-	}
+        if (!doVerification(startCode, endCode)) {
+            LOGGER.error("[DataParseByteUtil] -> [parseData] -> [invalid format : " + Hex.encodeHexString(bytes) + "]");
+            return null;
+        }
 
-	public Bracelet parseData(String data) {
-		this.rawData = data;
-		return parseData();
-	}
+        bracelet.setStartCode(startCode);
+        bracelet.setLength(length);
+        bracelet.setCommand(command);
+        bracelet.setMotionState(motionState);
+        bracelet.setPulseState(pulseState);
+        bracelet.setTemperature(temperature);
+        bracelet.setWarning(warning);
+        bracelet.setSbp(sbp);
+        bracelet.setDbp(dbp);
+        bracelet.setLatitude(latitude);
+        bracelet.setLongitude(longitude);
+        bracelet.setBraceletId(braceletId);
+        bracelet.setEndCode(endCode);
+        return bracelet;
+    }
 
-	private String parseLength(byte data) {
-		return String.valueOf((int) data);
-	}
+    public Bracelet parseData(String data) {
+        this.rawData = data;
+        return parseData();
+    }
 
-	private String parseMotionState(byte data) {
-		return String.valueOf((int) data);
-	}
+    private String parseLength(byte data) {
+        return String.valueOf((int) data);
+    }
 
-	private int parsePulseState(byte data) {
-		return (int) data;
-	}
+    private String parseMotionState(byte data) {
+        return String.valueOf((int) data);
+    }
 
-	private float parseTemperature(byte[] data) {
-		return Float.parseFloat(new String(data, CharsetUtil.US_ASCII));
-	}
+    private int parsePulseState(byte data) {
+        return (int) data;
+    }
 
-	private String parseWarning(byte data) {
-		return String.valueOf((int) data);
-	}
+    private float parseTemperature(byte[] data) {
+        return Float.parseFloat(new String(data, CharsetUtil.US_ASCII));
+    }
 
-	private String parseBraceletId(byte[] data) {
-		StringBuilder sb = new StringBuilder();
-		for (byte b : data) {
-			sb.append(String.valueOf(b));
-		}
-		return sb.toString();
-	}
+    private String parseWarning(byte data) {
+        return String.valueOf((int) data);
+    }
 
-	private String parseToString(byte[] data) {
-		return new String(data, CharsetUtil.US_ASCII);
-	}
+    private String parseBraceletId(byte[] data) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : data) {
+            sb.append(String.valueOf(b));
+        }
+        return sb.toString();
+    }
 
-	// verify the data packet is correct or not
-	private boolean doVerification(byte[] startArr, byte[] endArr) {
-		String start = parseToString(startArr);
-		String end = parseToString(endArr);
-		if (StringUtils.equals(start, Constants.START) && StringUtils.equals(end, Constants.END)) {
-			return true;
-		}
-		return false;
-	}
+    private String parseToString(byte[] data) {
+        return new String(data, CharsetUtil.US_ASCII);
+    }
+
+    // verify the data packet is correct or not
+    private boolean doVerification(byte[] startArr, byte[] endArr) {
+        String start = parseToString(startArr);
+        String end = parseToString(endArr);
+        if (StringUtils.equals(start, Constants.START) && StringUtils.equals(end, Constants.END)) {
+            return true;
+        }
+        return false;
+    }
 }

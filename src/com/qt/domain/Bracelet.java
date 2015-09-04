@@ -10,135 +10,160 @@ import com.qt.sql.BraceletDataSource;
 
 public class Bracelet {
 
-	private static final Logger LOGGER = Logger.getLogger(Bracelet.class);
+    private static final Logger LOGGER = Logger.getLogger(Bracelet.class);
 
-	private byte[] startCode;
+    private byte[] startCode;
 
-	private String length;
+    private String length;
 
-	private byte command;
+    private byte command;
 
-	private String motionState;
+    private String motionState;
 
-	private int pulseState;
+    private int pulseState;
 
-	private float temperature;
+    private float temperature;
 
-	private String warning;
+    private String warning;
 
-	private int sbp;
+    private int sbp;
 
-	private int dbp;
+    private int dbp;
 
-	private String braceletId;
+    private float latitude;
 
-	private byte[] endCode;
+    private float longitude;
 
-	public static void save(Bracelet bracelet) {
+    private String braceletId;
 
-		Sql2o sql2o = new Sql2o(BraceletDataSource.getDataSoruce());
+    private byte[] endCode;
 
-		String sql = "INSERT INTO tb_health_data(bracelet_id, motion_state, pulse_state, temperature, warning, sbp, dbp, create_date) "
-				+ "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :warning, :sbp, :dbp, :create_date)";
+    public static void save(Bracelet bracelet) {
 
-		try (Connection con = sql2o.open()) {
-			LOGGER.info("==========[Save bracelet start] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
-			con.createQuery(sql).addParameter("bracelet_id", bracelet.getBraceletId()).addParameter("motion_state", bracelet.getMotionState())
-					.addParameter("pulse_state", bracelet.getPulseState()).addParameter("temperature", bracelet.getTemperature()).addParameter("warning", bracelet.getWarning())
-					.addParameter("sbp", bracelet.getSbp()).addParameter("dbp", bracelet.getDbp()).addParameter("create_date", new Date()).executeUpdate();
-			LOGGER.info("==========[Save bracelet end] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
-		} catch (Exception e) {
-			LOGGER.error("==========[Save bracelet exception] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========", e);
-		}
+        Sql2o sql2o = new Sql2o(BraceletDataSource.getDataSoruce());
 
-	}
+        String sql = "INSERT INTO tb_health_data(bracelet_id, motion_state, pulse_state, temperature, warning, sbp, dbp, latitude, longitude, create_date) "
+                + "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :warning, :sbp, :dbp, :latitude, :longitude, :create_date)";
 
-	public byte[] getStartCode() {
-		return startCode;
-	}
+        try (Connection con = sql2o.open()) {
+            LOGGER.info("==========[Save bracelet start] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
+            con.createQuery(sql).addParameter("bracelet_id", bracelet.getBraceletId())
+                    .addParameter("motion_state", bracelet.getMotionState())
+                    .addParameter("pulse_state", bracelet.getPulseState())
+                    .addParameter("temperature", bracelet.getTemperature())
+                    .addParameter("warning", bracelet.getWarning())
+                    .addParameter("sbp", bracelet.getSbp()).addParameter("dbp", bracelet.getDbp())
+                    .addParameter("latitude", bracelet.getLatitude())
+                    .addParameter("longitude", bracelet.getLongitude())
+                    .addParameter("create_date", new Date()).executeUpdate();
+            LOGGER.info("==========[Save bracelet end] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========");
+        } catch (Exception e) {
+            LOGGER.error("==========[Save bracelet exception] -> [Bracelet Id : " + bracelet.getBraceletId() + "] ==========", e);
+        }
+    }
 
-	public void setStartCode(byte[] startCode) {
-		this.startCode = startCode;
-	}
+    public byte[] getStartCode() {
+        return startCode;
+    }
 
-	public String getLength() {
-		return length;
-	}
+    public void setStartCode(byte[] startCode) {
+        this.startCode = startCode;
+    }
 
-	public void setLength(String length) {
-		this.length = length;
-	}
+    public String getLength() {
+        return length;
+    }
 
-	public byte getCommand() {
-		return command;
-	}
+    public void setLength(String length) {
+        this.length = length;
+    }
 
-	public void setCommand(byte command) {
-		this.command = command;
-	}
+    public byte getCommand() {
+        return command;
+    }
 
-	public String getMotionState() {
-		return motionState;
-	}
+    public void setCommand(byte command) {
+        this.command = command;
+    }
 
-	public void setMotionState(String motionState) {
-		this.motionState = motionState;
-	}
+    public String getMotionState() {
+        return motionState;
+    }
 
-	public int getPulseState() {
-		return pulseState;
-	}
+    public void setMotionState(String motionState) {
+        this.motionState = motionState;
+    }
 
-	public void setPulseState(int pulseState) {
-		this.pulseState = pulseState;
-	}
+    public int getPulseState() {
+        return pulseState;
+    }
 
-	public float getTemperature() {
-		return temperature;
-	}
+    public void setPulseState(int pulseState) {
+        this.pulseState = pulseState;
+    }
 
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
+    public float getTemperature() {
+        return temperature;
+    }
 
-	public byte[] getEndCode() {
-		return endCode;
-	}
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
+    }
 
-	public void setEndCode(byte[] endCode) {
-		this.endCode = endCode;
-	}
+    public byte[] getEndCode() {
+        return endCode;
+    }
 
-	public String getBraceletId() {
-		return braceletId;
-	}
+    public void setEndCode(byte[] endCode) {
+        this.endCode = endCode;
+    }
 
-	public void setBraceletId(String braceletId) {
-		this.braceletId = braceletId;
-	}
+    public String getBraceletId() {
+        return braceletId;
+    }
 
-	public String getWarning() {
-		return warning;
-	}
+    public void setBraceletId(String braceletId) {
+        this.braceletId = braceletId;
+    }
 
-	public void setWarning(String warning) {
-		this.warning = warning;
-	}
+    public String getWarning() {
+        return warning;
+    }
 
-	public int getSbp() {
-		return sbp;
-	}
+    public void setWarning(String warning) {
+        this.warning = warning;
+    }
 
-	public void setSbp(int sbp) {
-		this.sbp = sbp;
-	}
+    public int getSbp() {
+        return sbp;
+    }
 
-	public int getDbp() {
-		return dbp;
-	}
+    public void setSbp(int sbp) {
+        this.sbp = sbp;
+    }
 
-	public void setDbp(int dbp) {
-		this.dbp = dbp;
-	}
+    public int getDbp() {
+        return dbp;
+    }
+
+    public void setDbp(int dbp) {
+        this.dbp = dbp;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
 
 }
