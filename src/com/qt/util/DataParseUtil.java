@@ -1,13 +1,8 @@
 package com.qt.util;
 
 import com.qt.constant.Constants;
-import com.qt.domain.Bracelet;
 import io.netty.util.CharsetUtil;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import java.util.Arrays;
 
 public class DataParseUtil {
 

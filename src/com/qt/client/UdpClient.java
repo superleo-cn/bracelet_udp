@@ -42,8 +42,7 @@ public final class UdpClient {
             // Broadcast the QOTM request to port 8080.
             ch.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(HEX_VALUE, CharsetUtil.US_ASCII), new InetSocketAddress(IP, PORT))).sync();
 
-            // QuoteOfTheMomentClientHandler will close the DatagramChannel when
-            // a
+            // QuoteOfTheMomentClientHandler will close the DatagramChannel when a
             // response is received. If the channel is not closed within 5
             // seconds,
             // print an error message and quit.

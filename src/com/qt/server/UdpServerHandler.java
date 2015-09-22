@@ -13,8 +13,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.qt.constant.Constants;
-import com.qt.domain.Bracelet;
-import com.qt.util.DataParseStringUtil;
 
 public class UdpServerHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 

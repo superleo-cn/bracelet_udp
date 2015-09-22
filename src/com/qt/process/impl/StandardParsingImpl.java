@@ -1,6 +1,6 @@
 package com.qt.process.impl;
 
-import com.qt.domain.Bracelet;
+import com.qt.domain.HealthData;
 import com.qt.process.ProcessParsing;
 import com.qt.util.DataParseUtil;
 import org.apache.commons.codec.binary.Hex;
@@ -14,7 +14,7 @@ public class StandardParsingImpl implements ProcessParsing {
 
     private String rawData;
 
-    private Bracelet bracelet = new Bracelet();
+    private HealthData healthData = new HealthData();
 
     public StandardParsingImpl(String rawData) {
         this.rawData = rawData;
@@ -22,14 +22,14 @@ public class StandardParsingImpl implements ProcessParsing {
 
     public void process() {
         try {
-            Bracelet bracelet = createBracelet();
-            Bracelet.save(bracelet);
+            HealthData healthData = createBracelet();
+            HealthData.save(healthData);
         } catch (Exception e) {
             LOGGER.error("[StandardParsing] -> [process] -> [exception]", e);
         }
     }
 
-    public Bracelet createBracelet() {
+    public HealthData createBracelet() {
         String value = this.rawData;
         byte[] bytes = value.getBytes();
         byte[] startCode = Arrays.copyOfRange(bytes, 0, 2);
@@ -52,20 +52,20 @@ public class StandardParsingImpl implements ProcessParsing {
             return null;
         }
 
-        bracelet.setStartCode(startCode);
-        bracelet.setLength(length);
-        bracelet.setCommand(command);
-        bracelet.setMotionState(motionState);
-        bracelet.setPulseState(pulseState);
-        bracelet.setTemperature(temperature);
-        bracelet.setWarning(warning);
-        bracelet.setSbp(sbp);
-        bracelet.setDbp(dbp);
-        bracelet.setLatitude(latitude);
-        bracelet.setLongitude(longitude);
-        bracelet.setBraceletId(braceletId);
-        bracelet.setEndCode(endCode);
-        return bracelet;
+        healthData.setStartCode(startCode);
+        healthData.setLength(length);
+        healthData.setCommand(command);
+        healthData.setMotionState(motionState);
+        healthData.setPulseState(pulseState);
+        healthData.setTemperature(temperature);
+        healthData.setWarning(warning);
+        healthData.setSbp(sbp);
+        healthData.setDbp(dbp);
+        healthData.setLatitude(latitude);
+        healthData.setLongitude(longitude);
+        healthData.setBraceletId(braceletId);
+        healthData.setEndCode(endCode);
+        return healthData;
     }
 
 }
