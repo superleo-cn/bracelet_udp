@@ -30,6 +30,16 @@ public final class UdpClient {
                     (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35, (byte) 0x35, (byte) 0x30, (byte) 0x30, (byte) 0x30, (byte) 0x30, (byte) 0x30,
                     (byte) 0x0D, (byte) 0x0A});
 
+    static final String HEX_VALUE_2 = new String(
+            new byte[]{(byte) 0x55, (byte) 0x33, (byte) 0x10, (byte) 0x02, (byte) 0x01, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x01,
+                    (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35,
+                    (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35,
+                    (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35,
+                    (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35,
+                    (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35, (byte) 0x35, (byte) 0x30, (byte) 0x30, (byte) 0x30, (byte) 0x30, (byte) 0x30,
+                    (byte) 0x33, (byte) 0x38, (byte) 0x2E, (byte) 0x35, (byte) 0x35, (byte) 0x30, (byte) 0x30, (byte) 0x30, (byte) 0x30, (byte) 0x30,
+                    (byte) 0x0D, (byte) 0x0A});
+
     public static void main(String[] args) throws Exception {
 
         EventLoopGroup group = new NioEventLoopGroup();

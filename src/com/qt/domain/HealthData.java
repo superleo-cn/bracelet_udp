@@ -46,7 +46,7 @@ public class HealthData {
                 + "VALUES (:bracelet_id, :motion_state, :pulse_state, :temperature, :warning, :sbp, :dbp, :latitude, :longitude, :create_date)";
 
         try (Connection con = sql2o.open()) {
-            LOGGER.info("==========[Save healthData start] -> [HealthData Id : " + healthData.getBraceletId() + "] ==========");
+            LOGGER.info("==========[Save HealthData start] -> [HealthData Id : " + healthData.getBraceletId() + "] ==========");
             con.createQuery(sql).addParameter("bracelet_id", healthData.getBraceletId())
                     .addParameter("motion_state", healthData.getMotionState())
                     .addParameter("pulse_state", healthData.getPulseState())
@@ -56,9 +56,9 @@ public class HealthData {
                     .addParameter("latitude", healthData.getLatitude())
                     .addParameter("longitude", healthData.getLongitude())
                     .addParameter("create_date", new Date()).executeUpdate();
-            LOGGER.info("==========[Save healthData end] -> [HealthData Id : " + healthData.getBraceletId() + "] ==========");
+            LOGGER.info("==========[Save HealthData end] -> [HealthData Id : " + healthData.getBraceletId() + "] ==========");
         } catch (Exception e) {
-            LOGGER.error("==========[Save healthData exception] -> [HealthData Id : " + healthData.getBraceletId() + "] ==========", e);
+            LOGGER.error("==========[Save HealthData exception] -> [HealthData Id : " + healthData.getBraceletId() + "] ==========", e);
         }
     }
 

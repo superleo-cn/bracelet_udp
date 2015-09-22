@@ -22,14 +22,14 @@ public class StandardParsingImpl implements ProcessParsing {
 
     public void process() {
         try {
-            HealthData healthData = createBracelet();
+            HealthData healthData = createData();
             HealthData.save(healthData);
         } catch (Exception e) {
             LOGGER.error("[StandardParsing] -> [process] -> [exception]", e);
         }
     }
 
-    public HealthData createBracelet() {
+    public HealthData createData() {
         String value = this.rawData;
         byte[] bytes = value.getBytes();
         byte[] startCode = Arrays.copyOfRange(bytes, 0, 2);

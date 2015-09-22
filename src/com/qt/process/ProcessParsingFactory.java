@@ -1,6 +1,7 @@
 package com.qt.process;
 
 import com.qt.constant.Constants;
+import com.qt.process.impl.EmergencyParsingImpl;
 import com.qt.process.impl.StandardParsingImpl;
 import com.qt.util.DataParseUtil;
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,8 @@ public class ProcessParsingFactory {
         }
         if (StringUtils.equals(protocol, Constants.STANDARD)) {
             return new StandardParsingImpl(value);
+        } else if (StringUtils.equals(protocol, Constants.EMERGENCY)) {
+            return new EmergencyParsingImpl(value);
         }
         return null;
     }
