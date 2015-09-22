@@ -1,5 +1,7 @@
 package com.qt.server;
 
+import com.qt.process.ProcessParsing;
+import com.qt.process.ProcessParsingFactory;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -38,14 +40,13 @@ public class UdpServerHandler extends SimpleChannelInboundHandler<DatagramPacket
 		}
 		String response = Constants.NO;
 		if (StringUtils.isNotEmpty(result)) {
-			DataParseStringUtil util = new DataParseStringUtil(result);
-			Bracelet bracelet = util.parseData();
-			if (bracelet != null) {
+			ProcessParsing parsing = ProcessParsingFactory.createParsing(result);
+			if (parsing != null) {
 				response = Constants.OK;
 			}
 			writeToClient(response, ctx, packet);
 			// store into database
-			Bracelet.save(bracelet);
+			parsing.process();
 		} else {
 			// should I block the invalid IP client?
 			writeToClient(response, ctx, packet);
