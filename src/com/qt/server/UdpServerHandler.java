@@ -31,7 +31,7 @@ public class UdpServerHandler extends SimpleChannelInboundHandler<DatagramPacket
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
-		String result = packet.content().toString(CharsetUtil.US_ASCII);
+		String result = packet.content().toString(CharsetUtil.ISO_8859_1);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("[UdpServerHandler] -> [channelRead0] -> " + packet);
 			LOGGER.debug("[UdpServerHandler] -> [channelRead0] -> " + Hex.encodeHexString(result.getBytes()));
