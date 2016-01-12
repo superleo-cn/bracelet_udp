@@ -19,7 +19,11 @@ public class DataParseUtil {
     }
 
     public static float parseTemperature(byte[] data) {
-        return Float.parseFloat(new String(data, CharsetUtil.US_ASCII));
+        return Float.parseFloat(parseBraceletId(data));
+    }
+
+    public static int parseInt(byte[] data) {
+        return Integer.parseInt(parseBraceletId(data));
     }
 
     public static String parseWarning(byte data) {
@@ -29,7 +33,11 @@ public class DataParseUtil {
     public static String parseBraceletId(byte[] data) {
         StringBuilder sb = new StringBuilder();
         for (byte b : data) {
-            sb.append(String.valueOf(b));
+            if (b == 46) {
+                sb.append(".");
+            } else {
+                sb.append(String.valueOf(b));
+            }
         }
         return sb.toString();
     }

@@ -37,15 +37,15 @@ public class StandardParsingImpl implements ProcessParsing {
         String protocol = DataParseUtil.parseLength(bytes[3]);
         byte command = bytes[4];
         String motionState = DataParseUtil.parseMotionState(bytes[5]);
-        int pulseState = DataParseUtil.parsePulseState(bytes[6]);
-        float temperature = DataParseUtil.parseTemperature(Arrays.copyOfRange(bytes, 7, 11));
-        String warning = DataParseUtil.parseWarning(bytes[11]);
-        int sbp = DataParseUtil.parsePulseState(bytes[12]);
-        int dbp = DataParseUtil.parsePulseState(bytes[13]);
-        String braceletId = DataParseUtil.parseBraceletId(Arrays.copyOfRange(bytes, 14, 21));
-        float latitude = DataParseUtil.parseTemperature(Arrays.copyOfRange(bytes, 21, 31));
-        float longitude = DataParseUtil.parseTemperature(Arrays.copyOfRange(bytes, 31, 41));
-        byte[] endCode = Arrays.copyOfRange(bytes, 41, 43);
+        int pulseState = DataParseUtil.parseInt(Arrays.copyOfRange(bytes, 6, 9));
+        float temperature = DataParseUtil.parseTemperature(Arrays.copyOfRange(bytes, 9, 13));
+        String warning = DataParseUtil.parseWarning(bytes[13]);
+        int sbp = DataParseUtil.parseInt(Arrays.copyOfRange(bytes, 14, 17));
+        int dbp = DataParseUtil.parseInt(Arrays.copyOfRange(bytes, 17, 20));
+        String braceletId = DataParseUtil.parseBraceletId(Arrays.copyOfRange(bytes, 20, 27));
+        float latitude = DataParseUtil.parseTemperature(Arrays.copyOfRange(bytes, 27, 37));
+        float longitude = DataParseUtil.parseTemperature(Arrays.copyOfRange(bytes, 37, 47));
+        byte[] endCode = Arrays.copyOfRange(bytes, 47, 49);
 
         if (!DataParseUtil.doVerification(startCode, endCode)) {
             LOGGER.error("[StandardParsing] -> [createBracelet] -> [invalid format : " + Hex.encodeHexString(bytes) + "]");
